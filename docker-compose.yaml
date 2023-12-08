@@ -9,11 +9,13 @@ services:
     environment:
       POSTGRES_PASSWORD: test123
       POSTGRES_USER: myuser
-      POSTGRES_DB: webapp_db
+      # POSTGRES_DB: webapp_db
     volumes: 
       - webapp:/var/lib/postgresql/data
     networks:
       - internalnet
+    healthcheck:
+      disable: true
 
   api: # name of the fastapi service
     build: ./backend #folder with the dockerfile for the fastapi server
@@ -26,10 +28,10 @@ services:
     
     depends_on: 
       - db
-
 volumes:
   webapp:
 
 networks:
   internalnet:
     driver: bridge
+
